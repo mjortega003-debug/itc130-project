@@ -2,26 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Makes site responsive on phones -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RetroExchange | Login</title>
+
+    <!-- Retro + clean font combo -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- jQuery + your main script (handles login, nav state, etc.) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+
 <body>
     <header>
         <div class="header-container">
+            <!-- Logo text, links back home -->
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Top navigation bar -->
             <nav>
                 <ul>
+                    <!-- Standard page links -->
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="shop.html">Shop</a></li>
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Highlight login on this page -->
                     <li id="nav-login"><a href="login.html" class="active">Login</a></li>
+
+                    <!-- Hidden until a user logs in -->
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
@@ -30,25 +47,37 @@
 
     <main>
         <h2>Login</h2>
+
+        <!-- Centered form wrapper -->
         <div class="form-container">
+
+            <!-- Login form (handled by main.js) -->
             <form id="login-form">
                 <div class="form-group">
                     <label>Username</label>
                     <input type="text" id="login-user" required>
                 </div>
+
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" id="login-pass" required>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Login</button>
+
+                <!-- Suggest sign-up -->
                 <p style="margin-top: 10px;">New here? <a href="register.html">Register</a></p>
             </form>
+
         </div>
     </main>
 
     <footer>
         <p>&copy; 2025 RetroExchange. All rights reserved.</p>
-        <p><a href="about.html">About</a> | <a href="credits.html">Credits</a> | <a href="config.html">Admin</a></p>
+
+        <!-- Extra footer links -->
+        <p><a href="about.html">About</a> | <a href="config.html">Admin</a></p>
     </footer>
+
 </body>
 </html>

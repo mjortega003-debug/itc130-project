@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RetroExchange | Admin</title>
+
+    <!-- Fonts + styles -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+
 <body>
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Main nav -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -21,6 +30,8 @@
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Login vs Dashboard handled dynamically -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
@@ -30,21 +41,32 @@
 
     <main>
         <h2>Admin Configuration</h2>
+
+        <!-- Admin form section -->
         <div class="form-container">
             <h3>Add New Event</h3>
+
+            <!-- Simple event creation form -->
             <form id="admin-event-form">
                 <div class="form-group">
                     <label>Event Name</label>
                     <input type="text" id="admin-evt-name" required>
                 </div>
+
                 <div class="form-group">
                     <label>Date</label>
                     <input type="date" id="admin-evt-date" required>
                 </div>
+
                 <button type="submit" class="btn btn-secondary">Add Event</button>
             </form>
+
             <br>
-            <button class="btn btn-primary" onclick="app.resetData()">Reset All Data (Debug)</button>
+
+            <!-- Debug button to clear local stored data -->
+            <button class="btn btn-primary" onclick="app.resetData()">
+                Reset All Data (Debug)
+            </button>
         </div>
     </main>
 

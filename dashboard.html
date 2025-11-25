@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroExchange | Dashboard</title>
+
+    <!-- Fonts + styles -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+
 <body id="page-dashboard">
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Navigation -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -21,6 +29,8 @@
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Login visibility handled by JS -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
@@ -30,16 +40,23 @@
 
     <main>
         <h2>User Dashboard</h2>
+
+        <!-- Dashboard UI -->
         <div style="background: #333333; padding: 20px; border: 2px solid var(--charcoal);">
             <h3>Welcome, <span id="dash-username">User</span>!</h3>
             <p>Member since: 2025</p>
+
             <br>
+
+            <!-- Calls logout() in main.js -->
             <button class="btn btn-primary" onclick="app.logout()">Logout</button>
+
             <hr style="margin: 20px 0;">
+
             <h3>My Listings</h3>
-            <div id="user-listings" class="games-grid">
-                <!-- Populated by JS -->
-            </div>
+
+            <!-- Filled in by JavaScript -->
+            <div id="user-listings" class="games-grid"></div>
         </div>
     </main>
 

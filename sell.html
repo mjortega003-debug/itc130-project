@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RetroExchange | Sell</title>
+
+    <!-- Fonts + stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- jQuery + main scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+
 <body id="page-sell">
+
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Navigation -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li> 
+                    <li><a href="about.html">About</a></li>
                     <li><a href="shop.html">Shop</a></li>
+
+                    <!-- Current page -->
                     <li><a href="sell.html">Sell/Trade</a></li>
+
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Login link (shown while logged out) -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
+
+                    <!-- Dashboard (shown after login) -->
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
@@ -29,14 +45,20 @@
     </header>
 
     <main>
+
         <h2>List Item for Sale</h2>
+
         <div class="form-container">
+            <!-- Sell-item form (JS stores listing locally) -->
             <form id="sell-form">
+
+                <!-- Game title -->
                 <div class="form-group">
                     <label>Game Title *</label>
                     <input type="text" id="sell-title" required>
                 </div>
-                
+
+                <!-- Console dropdown -->
                 <div class="form-group">
                     <label>Console *</label>
                     <select id="sell-console">
@@ -47,20 +69,26 @@
                     </select>
                 </div>
 
+                <!-- Price input -->
                 <div class="form-group">
                     <label>Price ($) *</label>
                     <input type="number" id="sell-price" min="1" step="0.01" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit Listing</button>
+
+                <!-- JS writes success/failure messages here -->
                 <div id="sell-msg" style="margin-top: 10px;"></div>
+
             </form>
         </div>
+
     </main>
 
     <footer>
         <p>&copy; 2025 RetroExchange. All rights reserved.</p>
         <p><a href="about.html">About</a> | <a href="config.html">Admin</a></p>
     </footer>
+
 </body>
 </html>

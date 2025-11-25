@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Standard meta setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RetroExchange | Home</title>
+
+    <!-- Fonts + global stylesheet -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- jQuery + site JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 
+    <!-- Page-specific styling -->
     <style>
         .hero-content {
-            background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for readability */
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 40px;
             border: 2px solid var(--neon-pink);
             display: inline-block;
@@ -52,10 +59,13 @@
         }
     </style>
 </head>
+
 <body id="page-home">
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Main site navigation -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -64,6 +74,8 @@
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Login/Dashboard swapped by JS -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
@@ -72,14 +84,17 @@
     </header>
 
     <main>
+        <!-- Hero section -->
         <div class="hero">
             <div class="hero-content">
                 <h1 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--neon-pink); text-shadow: 4px 4px 0px #000;">
                     Level Up Your Collection
                 </h1>
+
                 <p style="font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6;">
                     The internet's premier marketplace for buying, selling, and trading authentic retro video games.
                 </p>
+
                 <div>
                     <a href="shop.html" class="btn btn-primary" style="font-size: 1rem; padding: 15px 30px; margin-right: 15px;">Start Hunting</a>
                     <a href="sell.html" class="btn btn-secondary" style="font-size: 1rem; padding: 15px 30px;">Sell Games</a>
@@ -87,30 +102,41 @@
             </div>
         </div>
 
+        <!-- Featured products header -->
         <div class="section-header">
             <h2>Featured Gems</h2>
-            <a href="shop.html" style="color: var(--primary-blue); font-weight: bold;">View All Inventory &rarr;</a>
+            <a href="shop.html" style="color: var(--primary-blue); font-weight: bold;">
+                View All Inventory →
+            </a>
         </div>
-        
+
+        <!-- Filled by JS with featured games -->
         <div id="featured-grid" class="games-grid">
             <p>Loading market data...</p>
         </div>
 
+        <!-- Highlighted feature boxes -->
         <div class="features-row">
             <div class="feature-box">
                 <span class="feature-icon">🛡️</span>
                 <h3>Verified Sellers</h3>
                 <p style="margin-top: 10px;">Buy with confidence. Our community is rated by collectors, for collectors.</p>
             </div>
+
             <div class="feature-box">
                 <span class="feature-icon">⚖️</span>
                 <h3>Fair Pricing</h3>
-                <p style="margin-top: 10px;">Don't get ripped off. Use our <a href="utility.html">Price Utility</a> to check market values instantly.</p>
+                <p style="margin-top: 10px;">
+                    Don't get ripped off. Use our <a href="utility.html">Price Utility</a> to check market values instantly.
+                </p>
             </div>
+
             <div class="feature-box">
                 <span class="feature-icon">🤝</span>
                 <h3>Community Events</h3>
-                <p style="margin-top: 10px;">Connect IRL. Check out our <a href="events.html">Events page</a> for local swap meets.</p>
+                <p style="margin-top: 10px;">
+                    Connect IRL. Check out our <a href="events.html">Events page</a> for local swap meets.
+                </p>
             </div>
         </div>
 

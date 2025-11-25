@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RetroExchange | Register</title>
+
+    <!-- Fonts + styles -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- jQuery + main logic -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+
 <body>
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Top navbar -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li> 
+                    <li><a href="about.html">About</a></li>
                     <li><a href="shop.html">Shop</a></li>
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Login link (visible while logged out) -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
+
+                    <!-- Dashboard link (hidden until logged in) -->
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
@@ -30,21 +42,29 @@
 
     <main>
         <h2>Create Account</h2>
+
         <div class="form-container">
+            <!-- Registration form handled by main.js -->
             <form id="register-form">
+
                 <div class="form-group">
                     <label>Username *</label>
                     <input type="text" id="reg-user" required>
                 </div>
+
                 <div class="form-group">
                     <label>Email *</label>
                     <input type="email" id="reg-email" required>
+
+                    <!-- Hidden until JS validates -->
                     <span class="error-msg" id="reg-email-error">Invalid email format</span>
                 </div>
+
                 <div class="form-group">
                     <label>Password *</label>
                     <input type="password" id="reg-pass" required>
                 </div>
+
                 <button type="submit" class="btn btn-secondary">Sign Up</button>
             </form>
         </div>
@@ -54,5 +74,6 @@
         <p>&copy; 2025 RetroExchange. All rights reserved.</p>
         <p><a href="about.html">About</a> | <a href="config.html">Admin</a></p>
     </footer>
+
 </body>
 </html>

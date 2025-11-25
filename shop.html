@@ -2,34 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Responsive scaling -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RetroExchange | Shop</title>
+
+    <!-- Retro font + body font -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- jQuery + main logic (loads shop items, filtering, etc.) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+
 <body id="page-shop">
+
     <header>
         <div class="header-container">
+
+            <!-- Logo/title link -->
             <div class="logo"><a href="index.html">RetroExchange</a></div>
+
+            <!-- Navigation bar -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li> 
+                    <li><a href="about.html">About</a></li>
                     <li><a href="shop.html">Shop</a></li>
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
+
+                    <!-- Login or dashboard depending on auth -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
+
         </div>
     </header>
 
     <main>
+
         <h2>Retro Shop</h2>
+
+        <!-- Simple dropdown filter -->
         <div class="filter-bar">
             <label>Filter by:</label>
             <select id="shop-filter">
@@ -40,14 +58,18 @@
                 <option value="N64">N64</option>
             </select>
         </div>
+
+        <!-- Shop items injected by main.js -->
         <div id="shop-grid" class="games-grid">
             <!-- Dynamic Content -->
         </div>
+
     </main>
 
     <footer>
         <p>&copy; 2025 RetroExchange. All rights reserved.</p>
         <p><a href="about.html">About</a> | <a href="config.html">Admin</a></p>
     </footer>
+
 </body>
 </html>
