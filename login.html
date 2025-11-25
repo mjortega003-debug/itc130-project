@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroExchange | Login</title>
+    <title>RetroExchange | Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
-<body>
+<body id="page-home">
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
@@ -20,7 +20,7 @@
                     <li><a href="sell.html">Sell/Trade</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="utility.html">Utility</a></li>
-                    <li id="nav-login"><a href="login.html">Login</a></li>
+                    <li><a href="about.html">About</a></li> <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
             </nav>
@@ -28,20 +28,32 @@
     </header>
 
     <main>
-        <h2>Login</h2>
-        <div class="form-container">
-            <form id="login-form">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="login-user" required>
+        <div class="hero">
+            <h1>Relive the Classics</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Buy, Sell, and Trade the rarest retro games.</p>
+            <a href="shop.html" class="btn btn-primary" style="font-size: 1rem;">Browse Shop</a>
+            <a href="sell.html" class="btn btn-secondary" style="font-size: 1rem; margin-left: 10px;">Sell Games</a>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Featured Pickups</h2>
+                <a href="shop.html" style="color: var(--primary-blue);">View All &rarr;</a>
+            </div>
+            
+            <div id="featured-grid" class="games-grid">
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="login-pass" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <p style="margin-top: 10px;">New here? <a href="register.html">Register</a></p>
-            </form>
+        </div>
+
+        <div style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="background: white; padding: 20px; border: 2px solid var(--charcoal);">
+                <h3>Community First</h3>
+                <p>Join thousands of collectors sharing their passion for gaming history.</p>
+            </div>
+            <div style="background: white; padding: 20px; border: 2px solid var(--charcoal);">
+                <h3>Fair Prices</h3>
+                <p>Use our <a href="utility.html">Utility Tool</a> to estimate prices before you buy or sell.</p>
+            </div>
         </div>
     </main>
 

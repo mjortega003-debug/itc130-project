@@ -42,6 +42,14 @@ const app = {
             ];
             localStorage.setItem('events', JSON.stringify(events));
         }
+
+        if (!localStorage.getItem('users')) {
+            const users = [
+                { username: "admin", password: "password123", email: "admin@retro.com" },
+                { username: "player1", password: "p1", email: "p1@retro.com" }
+            ];
+            localStorage.setItem('users', JSON.stringify(users));
+        }
     },
 
     // 3. Auth & Navigation Logic
@@ -212,8 +220,29 @@ $(document).ready(function() {
     // Login Form
     $('#login-form').submit(function(e) {
         e.preventDefault();
-        const user = $('#login-user').val();
-        if(user) app.login(user);
+        const inputUser = $('#login-user').val();
+        const inputPass = $('#login-pass').val();
+
+        // Get all users from storage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // VALIDATION LOGIC:
+        // 1. Lowercase both usernames for comparison
+        // 2. Keep password comparison strict
+        const validUser = users.find(u => 
+            u.username.toLowerCase() === inputUser.toLowerCase() && 
+            u.password === inputPass
+        );
+
+        if(validUser) {
+            // Success: Log them in
+            app.login(validUser.username);
+        } else {
+            // Failure: Alert the user
+            alert("Invalid username or password!");
+            // Optional: Clear the password field
+            $('#login-pass').val('');
+        }
     });
 
     // Register Form
@@ -221,6 +250,7 @@ $(document).ready(function() {
         e.preventDefault();
         const user = $('#reg-user').val();
         const email = $('#reg-email').val();
+        const pass = $('#reg-pass').val();
         
         // Regex Validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -228,9 +258,29 @@ $(document).ready(function() {
             $('#reg-email-error').show();
             return;
         }
-        
-        // Simulate Register -> Login
-        app.login(user);
+
+        // 1. Get existing users
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // 2. Check if username already exists
+        if (users.some(u => u.username.toLowerCase() === user.toLowerCase())) {
+            alert("Username already taken!");
+            return;
+        }
+
+        // 3. Create new user object
+        const newUser = {
+            username: user,
+            email: email,
+            password: pass
+        };
+
+        // 4. Save to LocalStorage
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+
+        alert("Account created! Please log in.");
+        window.location.href = 'login.html';
     });
 
     // Sell Form
