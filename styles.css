@@ -1,11 +1,13 @@
 /* --- CSS Variables based on Branding --- */
 :root {
-    --primary-blue: #007BFF;
+    /* Made blue lighter/brighter for better contrast on dark backgrounds */
+    --primary-blue: #4dabf7; 
     --neon-pink: #FF4081;
     --charcoal: #333333;
+    --mid-gray: #444444; /* New body color */
+    --light-gray: #555555; /* Input fields */
     --off-white: #f4f4f4;
-    --dark-bg: #1a1a1a;
-    --border-color: #444;
+    --border-color: #666666;
 }
 
 /* --- Global Reset & Typography --- */
@@ -17,8 +19,8 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--off-white);
-    color: var(--charcoal);
+    background-color: var(--mid-gray); /* Lighter than header */
+    color: var(--off-white); /* White text */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -28,6 +30,22 @@ h1, h2, h3, .retro-font {
     font-family: 'Press Start 2P', cursive;
     line-height: 1.5;
     text-transform: uppercase;
+    color: white;
+}
+
+a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:visited {
+    color: var(--primary-blue); /* Prevents the purple color */
+}
+
+a:hover {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Nice glowing effect */
 }
 
 /* --- Header & Navigation --- */
@@ -52,7 +70,7 @@ header {
 .logo a {
     font-size: 1.2rem;
     color: var(--primary-blue);
-    text-shadow: 2px 2px 0px #fff;
+    text-shadow: 2px 2px 0px #000;
     text-decoration: none;
     font-family: 'Press Start 2P', cursive;
 }
@@ -65,7 +83,7 @@ nav ul {
 }
 
 nav a {
-    color: white;
+    color: #ccc;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
@@ -74,6 +92,7 @@ nav a {
 
 nav a:hover, nav a.active {
     color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
 }
 
 /* --- Main Content Area --- */
@@ -100,7 +119,7 @@ main {
 
 .btn-primary {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--charcoal); /* Dark text on bright blue */
     border-bottom: 4px solid #0056b3;
 }
 
@@ -128,22 +147,16 @@ main {
     border: 4px solid var(--primary-blue);
 }
 
-.hero h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: var(--neon-pink);
-    text-shadow: 3px 3px 0 #000;
-}
-
 /* --- Shop Grid --- */
 .filter-bar {
-    background: white;
+    background: var(--charcoal);
     padding: 15px;
-    border: 2px solid var(--charcoal);
+    border: 2px solid var(--border-color);
     margin-bottom: 20px;
     display: flex;
     gap: 15px;
     align-items: center;
+    color: white;
 }
 
 .games-grid {
@@ -153,8 +166,8 @@ main {
 }
 
 .game-card {
-    background: white;
-    border: 2px solid var(--charcoal);
+    background: var(--charcoal); /* Dark cards */
+    border: 2px solid var(--border-color);
     padding: 15px;
     transition: transform 0.2s;
     display: flex;
@@ -163,26 +176,28 @@ main {
 
 .game-card:hover {
     transform: translateY(-5px);
-    box-shadow: 5px 5px 0px var(--primary-blue);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 10px var(--primary-blue);
 }
 
 .game-image {
     width: 100%;
     height: 150px;
-    background-color: #ddd;
+    background-color: #222; /* Darker placeholder */
     margin-bottom: 10px;
     object-fit: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    color: #aaa;
+    color: #555;
+    border: 1px solid #444;
 }
 
 .game-info h3 {
     font-size: 0.9rem;
     margin-bottom: 5px;
-    color: var(--charcoal);
+    color: var(--off-white); /* White text */
 }
 
 .price-tag {
@@ -195,12 +210,12 @@ main {
 
 /* --- Forms --- */
 .form-container {
-    background: white;
+    background: var(--charcoal);
     padding: 30px;
     max-width: 600px;
     margin: 0 auto;
-    border: 2px solid var(--charcoal);
-    box-shadow: 8px 8px 0px var(--charcoal);
+    border: 2px solid var(--border-color);
+    box-shadow: 8px 8px 0px #222;
 }
 
 .form-group {
@@ -211,29 +226,46 @@ main {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: var(--primary-blue);
 }
 
 .form-group input, .form-group select, .form-group textarea {
     width: 100%;
     padding: 10px;
-    border: 2px solid #ccc;
+    background-color: var(--light-gray);
+    border: 2px solid var(--border-color);
+    color: white;
     font-family: 'Roboto', sans-serif;
 }
 
+.form-group input:focus {
+    outline: none;
+    border-color: var(--neon-pink);
+}
+
 .error-msg {
-    color: red;
+    color: var(--neon-pink);
     font-size: 0.8rem;
     display: none;
     margin-top: 5px;
 }
 
-/* --- Events & Utility --- */
+/* --- Features & Events --- */
+.feature-box {
+    /* Overrides inline styles from HTML if moved here eventually */
+    background: var(--charcoal) !important;
+    border: 2px solid var(--border-color) !important;
+    color: white !important;
+    box-shadow: 5px 5px 0px #222 !important;
+}
+
 .event-card {
-    background: white;
+    background: var(--charcoal);
     border-left: 5px solid var(--neon-pink);
     padding: 15px;
     margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    color: white;
 }
 
 .utility-box {
@@ -259,12 +291,28 @@ footer {
     padding: 20px;
     margin-top: auto;
     font-size: 0.8rem;
+    border-top: 2px solid #444;
 }
 
-footer a { color: #aaa; text-decoration: none; }
+footer a { color: var(--primary-blue); text-decoration: none; }
+footer a:hover { color: var(--neon-pink); }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
     .header-container { flex-direction: column; text-align: center; }
     nav ul { flex-wrap: wrap; justify-content: center; }
+}
+
+/* --- Helper to fix the About Page white box --- */
+#page-about div[style*="background: white"] {
+    background: var(--charcoal) !important;
+    border-color: var(--border-color) !important;
+    color: white;
+}
+
+#page-home div[style*="background: white"] {
+    background: var(--charcoal) !important;
+    border-color: var(--border-color) !important;
+    color: white;
+    box-shadow: 5px 5px 0px #222 !important;
 }
