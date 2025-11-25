@@ -1,31 +1,39 @@
-/* --- CSS Variables based on Branding --- */
+/* --- 1. CSS VARIABLES (THEMING) --- */
 :root {
-    /* Made blue lighter/brighter for better contrast on dark backgrounds */
+    /* Brand Colors */
+    /* Lighter blue for better contrast against dark backgrounds */
     --primary-blue: #4dabf7; 
     --neon-pink: #FF4081;
-    --charcoal: #333333;
-    --mid-gray: #444444; /* New body color */
-    --light-gray: #555555; /* Input fields */
-    --off-white: #f4f4f4;
+    
+    /* Grayscale / Dark Mode Palette */
+    --charcoal: #333333;   /* Header & Card Backgrounds */
+    --mid-gray: #444444;   /* Main Body Background */
+    --light-gray: #555555; /* Input Field Backgrounds */
     --border-color: #666666;
+    
+    /* Text Colors */
+    --off-white: #f4f4f4;
 }
 
-/* --- Global Reset & Typography --- */
+/* --- 2. GLOBAL RESET & TYPOGRAPHY --- */
 * {
-    box-sizing: border-box;
+    box-sizing: border-box; /* Includes padding/border in element width/height */
     margin: 0;
     padding: 0;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--mid-gray); /* Lighter than header */
-    color: var(--off-white); /* White text */
+    background-color: var(--mid-gray);
+    color: var(--off-white);
+    
+    /* Flex column ensures the footer stays at the bottom even on short pages */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
+/* Retro Font Styling (Headers) */
 h1, h2, h3, .retro-font {
     font-family: 'Press Start 2P', cursive;
     line-height: 1.5;
@@ -33,22 +41,83 @@ h1, h2, h3, .retro-font {
     color: white;
 }
 
+/* GLOBAL LINK STYLING 
+   This sets the default behavior for text links in paragraphs/lists.
+*/
 a {
     color: var(--primary-blue);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s, text-shadow 0.2s;
 }
 
+/* Prevent purple "visited" links */
 a:visited {
-    color: var(--primary-blue); /* Prevents the purple color */
+    color: var(--primary-blue);
 }
 
+/* Link Hover Effect (Glowing Pink) */
 a:hover {
     color: var(--neon-pink);
-    text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Nice glowing effect */
+    text-shadow: 0 0 5px rgba(255, 64, 129, 0.5);
 }
 
-/* --- Header & Navigation --- */
+/* --- 3. COMPONENTS (BUTTONS) --- */
+/* NOTE: We use '!important' on colors here to ensure these button styles 
+   override the Global Link Styling defined above. 
+*/
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    transition: transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+    
+    /* Remove the global link glow from buttons */
+    text-shadow: none !important; 
+}
+
+/* Primary Button (Blue Background) */
+.btn-primary, a.btn-primary {
+    background-color: var(--primary-blue);
+    /* Dark text is needed on bright blue bg */
+    color: var(--charcoal) !important; 
+    border-bottom: 4px solid #0056b3;
+}
+
+/* Secondary Button (Pink Background) */
+.btn-secondary, a.btn-secondary {
+    background-color: var(--neon-pink);
+    /* White text looks best on pink bg */
+    color: white !important; 
+    border-bottom: 4px solid #c51162;
+}
+
+/* Button Click Animation (Press down) */
+.btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+}
+
+/* Button Hover States 
+   We must explicitely set colors here so they don't turn into the 
+   Global Link Hover color (Pink) which would be invisible on a pink button.
+*/
+.btn-primary:hover, a.btn-primary:hover {
+    color: var(--charcoal) !important; /* Keep text dark */
+    filter: brightness(1.1); /* Slight brighten effect */
+}
+
+.btn-secondary:hover, a.btn-secondary:hover {
+    color: white !important; /* Keep text white */
+    filter: brightness(1.1);
+}
+
+/* --- 4. HEADER & NAVIGATION --- */
 header {
     background-color: var(--charcoal);
     color: white;
@@ -82,60 +151,33 @@ nav ul {
     margin-top: 10px;
 }
 
+/* Nav Links */
 nav a {
-    color: #ccc;
+    color: #ccc; /* Light gray by default */
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
     font-size: 0.9rem;
 }
 
+/* Active/Hover Nav Links */
 nav a:hover, nav a.active {
     color: var(--neon-pink);
     text-shadow: 0 0 5px var(--neon-pink);
 }
 
-/* --- Main Content Area --- */
+/* --- 5. MAIN LAYOUT --- */
 main {
-    flex: 1;
+    flex: 1; /* Pushes footer down */
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     width: 100%;
 }
 
-/* --- Components --- */
-.btn {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    transition: transform 0.1s;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-primary {
-    background-color: var(--primary-blue);
-    color: var(--charcoal); /* Dark text on bright blue */
-    border-bottom: 4px solid #0056b3;
-}
-
-.btn-secondary {
-    background-color: var(--neon-pink);
-    color: white;
-    border-bottom: 4px solid #c51162;
-}
-
-.btn:active {
-    transform: translateY(2px);
-    border-bottom-width: 2px;
-}
-
-/* --- Hero Section --- */
+/* --- 6. HERO SECTION --- */
 .hero {
+    /* Background Image with Dark Overlay */
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80');
     background-size: cover;
     background-position: center;
@@ -147,33 +189,24 @@ main {
     border: 4px solid var(--primary-blue);
 }
 
-/* --- Shop Grid --- */
-.filter-bar {
-    background: var(--charcoal);
-    padding: 15px;
-    border: 2px solid var(--border-color);
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    color: white;
-}
-
+/* --- 7. CARDS (Shop/Events/Dashboard) --- */
 .games-grid {
     display: grid;
+    /* Responsive Grid: Cards are min 250px wide */
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
 
 .game-card {
-    background: var(--charcoal); /* Dark cards */
+    background: var(--charcoal);
     border: 2px solid var(--border-color);
     padding: 15px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
 }
 
+/* Card Hover Effect */
 .game-card:hover {
     transform: translateY(-5px);
     border-color: var(--primary-blue);
@@ -183,7 +216,7 @@ main {
 .game-image {
     width: 100%;
     height: 150px;
-    background-color: #222; /* Darker placeholder */
+    background-color: #222;
     margin-bottom: 10px;
     object-fit: cover;
     display: flex;
@@ -197,7 +230,7 @@ main {
 .game-info h3 {
     font-size: 0.9rem;
     margin-bottom: 5px;
-    color: var(--off-white); /* White text */
+    color: var(--off-white);
 }
 
 .price-tag {
@@ -208,7 +241,16 @@ main {
     padding-top: 10px;
 }
 
-/* --- Forms --- */
+.event-card {
+    background: var(--charcoal);
+    border-left: 5px solid var(--neon-pink);
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    color: white;
+}
+
+/* --- 8. FORMS --- */
 .form-container {
     background: var(--charcoal);
     padding: 30px;
@@ -238,9 +280,21 @@ main {
     font-family: 'Roboto', sans-serif;
 }
 
-.form-group input:focus {
+/* Input Focus State */
+.form-group input:focus, .form-group select:focus {
     outline: none;
     border-color: var(--neon-pink);
+}
+
+.filter-bar {
+    background: var(--charcoal);
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    color: white;
 }
 
 .error-msg {
@@ -250,24 +304,7 @@ main {
     margin-top: 5px;
 }
 
-/* --- Features & Events --- */
-.feature-box {
-    /* Overrides inline styles from HTML if moved here eventually */
-    background: var(--charcoal) !important;
-    border: 2px solid var(--border-color) !important;
-    color: white !important;
-    box-shadow: 5px 5px 0px #222 !important;
-}
-
-.event-card {
-    background: var(--charcoal);
-    border-left: 5px solid var(--neon-pink);
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    color: white;
-}
-
+/* --- 9. UTILITY PAGE --- */
 .utility-box {
     background: var(--charcoal);
     color: white;
@@ -283,7 +320,7 @@ main {
     font-family: 'Press Start 2P', cursive;
 }
 
-/* --- Footer --- */
+/* --- 10. FOOTER --- */
 footer {
     background-color: var(--charcoal);
     color: #888;
@@ -297,22 +334,21 @@ footer {
 footer a { color: var(--primary-blue); text-decoration: none; }
 footer a:hover { color: var(--neon-pink); }
 
-/* --- Responsive --- */
+/* --- 11. RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 768px) {
     .header-container { flex-direction: column; text-align: center; }
     nav ul { flex-wrap: wrap; justify-content: center; }
 }
 
-/* --- Helper to fix the About Page white box --- */
-#page-about div[style*="background: white"] {
+/* --- 12. HELPER CLASSES --- */
+/* These enforce the Dark Theme on containers that might 
+   have inline styles hardcoded in the HTML files. 
+*/
+#page-about div[style*="background: white"],
+#page-home div[style*="background: white"],
+.feature-box {
     background: var(--charcoal) !important;
     border-color: var(--border-color) !important;
-    color: white;
-}
-
-#page-home div[style*="background: white"] {
-    background: var(--charcoal) !important;
-    border-color: var(--border-color) !important;
-    color: white;
+    color: white !important;
     box-shadow: 5px 5px 0px #222 !important;
 }
