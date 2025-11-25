@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroExchange | Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">RetroExchange</a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="sell.html">Sell/Trade</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="utility.html">Utility</a></li>
+                    <li id="nav-login"><a href="login.html">Login</a></li>
+                    <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h2>Create Account</h2>
+        <div class="form-container">
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Username *</label>
+                    <input type="text" id="reg-user" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="reg-email" required>
+                    <span class="error-msg" id="reg-email-error">Invalid email format</span>
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="reg-pass" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">Sign Up</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 RetroExchange. All rights reserved.</p>
+        <p><a href="about.html">About</a> | <a href="credits.html">Credits</a> | <a href="config.html">Admin</a></p>
+    </footer>
+</body>
+</html>
