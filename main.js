@@ -1,11 +1,10 @@
 /* main.js - RetroExchange
  *
  * Responsibilities:
- *  - Seed demo data into localStorage (games, events, users)
+ *  - Seed demo data into localStorage (games, users)
  *  - Manage simple session-based authentication (sessionStorage)
- *  - Provide page-specific rendering utilities (home/shop/events/dashboard)
+ *  - Provide page-specific rendering utilities (home/shop/dashboard)
  *  - Wire up form handlers (login/register/sell/admin)
- *  - Small utility functions (price estimator, reset)
  *
  * NOTES / SECURITY CONSIDERATIONS:
  *  - This is a demo/static implementation: users and passwords are stored in localStorage
@@ -37,7 +36,6 @@ const app = {
 
         if (pageId === 'page-home') this.renderFeatured();
         if (pageId === 'page-shop') this.renderShop();
-        if (pageId === 'page-events') this.renderEvents();
         if (pageId === 'page-dashboard') this.renderDashboard();
         if (pageId === 'page-sell') this.checkSellAuth();
     },
@@ -51,21 +49,13 @@ const app = {
         // Seed games
         if (!localStorage.getItem('games')) {
             const games = [
-                { id: 1, title: "Super Mario Bros 3", console: "NES", price: 45.00, image: "🍄", seller: "RetroShop" },
-                { id: 2, title: "Sonic the Hedgehog", console: "Genesis", price: 25.00, image: "🦔", seller: "RetroShop" },
-                { id: 3, title: "Zelda: Ocarina of Time", console: "N64", price: 60.00, image: "⚔️", seller: "RetroShop" },
-                { id: 4, title: "Street Fighter II", console: "SNES", price: 30.00, image: "🥊", seller: "RetroShop" }
+                // Using placeholder images for the demo
+                { id: 1, title: "Super Mario Bros 3", console: "NES", price: 45.00, image: "https://files.catbox.moe/7k8x0s.png", seller: "RetroShop" },
+                { id: 2, title: "Sonic the Hedgehog", console: "Genesis", price: 25.00, image: "https://files.catbox.moe/6bizrf.png", seller: "RetroShop" },
+                { id: 3, title: "Zelda: Ocarina of Time", console: "N64", price: 60.00, image: "https://files.catbox.moe/hfw7my.png", seller: "RetroShop" },
+                { id: 4, title: "Street Fighter II", console: "SNES", price: 30.00, image: "https://files.catbox.moe/qmymch.png", seller: "RetroShop" }
             ];
             localStorage.setItem('games', JSON.stringify(games));
-        }
-
-        // Seed events
-        if (!localStorage.getItem('events')) {
-            const events = [
-                { title: "Retro Game Expo 2025", date: "2025-05-21", location: "Seattle, WA" },
-                { title: "Local Swap Meet", date: "2025-06-10", location: "Austin, TX" }
-            ];
-            localStorage.setItem('events', JSON.stringify(events));
         }
 
         // Seed users (demo only)
@@ -169,47 +159,31 @@ const app = {
         }
 
         games.forEach(game => {
-            // Use parseFloat + toFixed for consistent price formatting
             const price = parseFloat(game.price || 0).toFixed(2);
+            let imageHtml;
+
+            // Check if image string is a URL or Base64 (contains http or data:)
+            if (game.image && (game.image.startsWith('http') || game.image.startsWith('data:'))) {
+                imageHtml = `<img src="${game.image}" alt="${game.title}">`;
+            } else {
+                // Fallback to emoji/text
+                imageHtml = game.image || '👾'; 
+            }
 
             html += `
                 <div class="game-card">
-                    <div class="game-image">${game.image}</div>
+                    <div class="game-image">${imageHtml}</div>
                     <div class="game-info">
                         <h3>${game.title}</h3>
                         <p style="color:#666; font-size:0.8rem;">${game.console}</p>
                         <div class="price-tag">$${price}</div>
-                        <button class="btn btn-primary" onclick="alert('Added to cart!')" style="width:100%; margin-top:10px;">Add to Cart</button>
+                        <button class="btn btn-primary" onclick="app.addToCart('${game.title}')" style="width:100%; margin-top:10px;">Add to Cart</button>
                     </div>
                 </div>
             `;
         });
 
         $(selector).html(html);
-    },
-
-    // Events page: render each event card
-    renderEvents: function() {
-        const events = JSON.parse(localStorage.getItem('events')) || [];
-        let html = '';
-
-        if (events.length === 0) {
-            $('#events-list').html('<p>No upcoming events.</p>');
-            return;
-        }
-
-        events.forEach(evt => {
-            html += `
-                <div class="event-card">
-                    <h3>${evt.title}</h3>
-                    <p><strong>Date:</strong> ${evt.date}</p>
-                    <p><strong>Location:</strong> ${evt.location || 'TBD'}</p>
-                    <button class="btn btn-secondary" onclick="alert('QR Code Generated!')" style="margin-top:10px; font-size:0.6rem;">Generate Ticket QR</button>
-                </div>
-            `;
-        });
-
-        $('#events-list').html(html);
     },
 
     // Dashboard: shows user-specific listings and requires auth
@@ -232,12 +206,26 @@ const app = {
         } else {
             let html = '';
             myGames.forEach(game => {
+                
+                // --- NEW IMAGE LOGIC START ---
+                let imageHtml;
+                // Check if image string is a URL or Base64 (contains http or data:)
+                if (game.image && (game.image.startsWith('http') || game.image.startsWith('data:'))) {
+                    imageHtml = `<img src="${game.image}" alt="${game.title}">`;
+                } else {
+                    // Fallback to emoji/text
+                    imageHtml = game.image || '👾'; 
+                }
+                // --- NEW IMAGE LOGIC END ---
+
                 html += `
                     <div class="game-card">
-                        <div class="game-image">${game.image}</div>
-                        <h3>${game.title}</h3>
-                        <p>$${parseFloat(game.price || 0).toFixed(2)}</p>
-                        <small style="color:green;">Active</small>
+                        <div class="game-image">${imageHtml}</div>
+                        <div class="game-info">
+                            <h3>${game.title}</h3>
+                            <p>$${parseFloat(game.price || 0).toFixed(2)}</p>
+                            <small style="color:green; font-weight:bold;">● Active Listing</small>
+                            </div>
                     </div>
                 `;
             });
@@ -253,26 +241,19 @@ const app = {
         }
     },
 
-    /* ------------------------------------------------------------
-       5) Utilities
-       - calculateValue: simple estimator used by utility.html
-       - randomVar introduces small variance to the estimate so results are not identical
-       ------------------------------------------------------------ */
-    calculateValue: function() {
-        // Parse selected base value and multiplier
-        const base = parseFloat($('#util-gen').val()) || 0;
-        const multiplier = parseFloat($('#util-cond').val()) || 1;
-
-        // tiny pseudo-random variance to make outputs slightly less deterministic
-        const randomVar = Math.floor(Math.random() * 10);
-        const total = (base * multiplier) + randomVar;
-
-        // Render formatted result
-        $('#util-result').text('$' + total.toFixed(2));
+    addToCart: function(gameTitle) {
+        if (!this.currentUser) {
+            if(confirm("You must be logged in to shop. Go to login?")) {
+                window.location.href = 'login.html';
+            }
+        } else {
+            // In a real app, this would add to a database/array
+            alert(gameTitle + " added to your cart!");
+        }
     },
 
     /* ------------------------------------------------------------
-       6) Admin / Debug helpers
+       5) Admin / Debug helpers
        - resetData: clears localStorage and sessionStorage after confirmation
        - WARNING: destructive operation used for debugging only
        ------------------------------------------------------------ */
@@ -373,55 +354,82 @@ $(document).ready(function() {
         window.location.href = 'login.html';
     });
 
-    // SELL FORM handler - posts new listing under the current user
+    // SELL FORM handler
     $('#sell-form').submit(function(e) {
         e.preventDefault();
 
-        // Defensive check: ensure a user is logged in
         if (!app.currentUser) {
             alert('You must be logged in to list an item.');
             window.location.href = 'login.html';
             return;
         }
 
-        const newGame = {
-            id: Date.now(), // simple unique-ish id based on timestamp
-            title: $('#sell-title').val(),
-            console: $('#sell-console').val(),
-            price: $('#sell-price').val(),
-            image: "👾",
-            seller: app.currentUser
-        };
+        // 1. Get simple text values
+        const title = $('#sell-title').val();
+        const consoleType = $('#sell-console').val();
+        const price = $('#sell-price').val();
+        
+        // 2. Handle File Input
+        const fileInput = document.getElementById('sell-image');
+        const file = fileInput.files[0];
 
-        const games = JSON.parse(localStorage.getItem('games')) || [];
-        games.push(newGame);
-        localStorage.setItem('games', JSON.stringify(games));
+        // Define the function that actually saves the game
+        function saveGame(imageValue) {
+            const newGame = {
+                id: Date.now(),
+                title: title,
+                console: consoleType,
+                price: price,
+                image: imageValue, // Will be Base64 string OR default emoji
+                seller: app.currentUser
+            };
 
-        $('#sell-msg').text('Item listed successfully!').css('color', 'green').fadeIn();
-        // Reset form inputs
-        $('#sell-form')[0].reset();
+            const games = JSON.parse(localStorage.getItem('games')) || [];
+            games.push(newGame);
+            localStorage.setItem('games', JSON.stringify(games));
 
-        // Short delay so user sees confirmation, then redirect to shop
-        setTimeout(() => {
-            window.location.href = 'shop.html';
-        }, 1500);
-    });
+            $('#sell-msg').text('Item listed successfully!').css('color', 'green').fadeIn();
+            $('#sell-form')[0].reset();
+            setTimeout(() => { window.location.href = 'shop.html'; }, 1500);
+        }
 
-    // ADMIN: Add event form
-    $('#admin-event-form').submit(function(e) {
-        e.preventDefault();
+        // 3. Logic: If file exists, process it. If not, save with default.
+        if (file) {
+            // Size Check (Limit to 500KB to save localStorage space)
+            if (file.size > 500000) {
+                alert("File is too large! Please use an image under 500KB.");
+                return;
+            }
 
-        const newEvent = {
-            title: $('#admin-evt-name').val(),
-            date: $('#admin-evt-date').val(),
-            location: "TBD"
-        };
+            const reader = new FileReader();
+            
+            // When reader loads the file data...
+            reader.onload = function(event) {
+                const base64String = event.target.result;
 
-        const events = JSON.parse(localStorage.getItem('events')) || [];
-        events.push(newEvent);
-        localStorage.setItem('events', JSON.stringify(events));
+                // Create an image object to check dimensions
+                const img = new Image();
+                img.src = base64String;
 
-        alert("Event Added!");
-        window.location.href = 'events.html';
+                img.onload = function() {
+                    // Dimension Check (Strict 300x200)
+                    // You can change !== to > if you want to allow smaller images
+                    if (this.width > 300 || this.height > 200) {
+                        alert("Image dimensions must be max 300x200px.");
+                        return;
+                    }
+                    
+                    // If dimensions are good, save!
+                    saveGame(base64String);
+                };
+            };
+            
+            // Start reading the file
+            reader.readAsDataURL(file);
+
+        } else {
+            // No file uploaded? Use generic emoji fallback
+            saveGame("👾");
+        }
     });
 });

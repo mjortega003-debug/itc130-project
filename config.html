@@ -25,13 +25,9 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li> 
+                    <li><a href="about.html">About</a></li>
                     <li><a href="shop.html">Shop</a></li>
                     <li><a href="sell.html">Sell/Trade</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="utility.html">Utility</a></li>
-
-                    <!-- Login vs Dashboard handled dynamically -->
                     <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
@@ -44,25 +40,6 @@
 
         <!-- Admin form section -->
         <div class="form-container">
-            <h3>Add New Event</h3>
-
-            <!-- Simple event creation form -->
-            <form id="admin-event-form">
-                <div class="form-group">
-                    <label>Event Name</label>
-                    <input type="text" id="admin-evt-name" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="date" id="admin-evt-date" required>
-                </div>
-
-                <button type="submit" class="btn btn-secondary">Add Event</button>
-            </form>
-
-            <br>
-
             <!-- Debug button to clear local stored data -->
             <button class="btn btn-primary" onclick="app.resetData()">
                 Reset All Data (Debug)
