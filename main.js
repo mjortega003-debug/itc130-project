@@ -1,17 +1,17 @@
 /* main.js - RetroExchange
  *
  * Responsibilities:
- *  - Seed demo data into localStorage (games, users)
- *  - Manage simple session-based authentication (sessionStorage)
- *  - Provide page-specific rendering utilities (home/shop/dashboard)
- *  - Wire up form handlers (login/register/sell/admin)
+ * - Seed demo data into localStorage (games, users)
+ * - Manage simple session-based authentication (sessionStorage)
+ * - Provide page-specific rendering utilities (home/shop/dashboard/cart)
+ * - Wire up form handlers (login/register/sell/admin)
  *
  * NOTES / SECURITY CONSIDERATIONS:
- *  - This is a demo/static implementation: users and passwords are stored in localStorage
- *    and passwords are in plaintext. This is not secure for any production use.
- *  - sessionStorage is used to keep the "currentUser" for the browser session only.
- *  - All client-side checks can be bypassed by a determined user. For a real app,
- *    move auth, persistence, and critical logic to a secure server.
+ * - This is a demo/static implementation: users and passwords are stored in localStorage
+ * and passwords are in plaintext. This is not secure for any production use.
+ * - sessionStorage is used to keep the "currentUser" for the browser session only.
+ * - All client-side checks can be bypassed by a determined user. For a real app,
+ * move auth, persistence, and critical logic to a secure server.
  */
 
 const app = {
@@ -38,6 +38,7 @@ const app = {
         if (pageId === 'page-shop') this.renderShop();
         if (pageId === 'page-dashboard') this.renderDashboard();
         if (pageId === 'page-sell') this.checkSellAuth();
+        if (pageId === 'page-cart') this.renderCart(); // <--- NEW: Cart Page
     },
 
     /* ------------------------------------------------------------
@@ -83,6 +84,8 @@ const app = {
             this.currentUser = sessionUser;
             $('#nav-login').hide();
             $('#nav-dashboard').show();
+            $('#nav-cart').show(); // <--- NEW: Show cart only when logged in
+            
             // show username in the nav dashboard link
             $('#nav-dashboard a').text('Dashboard (' + sessionUser + ')');
         } else {
@@ -90,6 +93,7 @@ const app = {
             this.currentUser = null;
             $('#nav-login').show();
             $('#nav-dashboard').hide();
+            $('#nav-cart').hide(); // <--- NEW: Hide cart when logged out
         }
     },
 
@@ -233,6 +237,134 @@ const app = {
         }
     },
 
+    /* ------------------------------------------------------------
+       5) Shopping Cart Logic (NEW)
+       ------------------------------------------------------------ */
+    
+    // Renders the cart table. Contains Security Check.
+    renderCart: function() {
+        // 1. Security Check: Redirect if not logged in
+        if (!this.currentUser) {
+            alert("Please log in to view your cart.");
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const container = $('#cart-content');
+        
+        // 2. Handle Empty Cart
+        if (cart.length === 0) {
+            container.html('<p>Your cart is empty. Go find some games!</p>');
+            $('#cart-summary').hide(); 
+            return;
+        }
+
+        // 3. Build the Cart Table
+        $('#cart-summary').show();
+        let html = '<table style="width:100%; text-align:left; border-collapse: collapse;">';
+        html += '<tr style="border-bottom:1px solid #666; color:#999;"><th>Item</th><th>Console</th><th>Price</th><th>Action</th></tr>';
+
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += parseFloat(item.price);
+            html += `
+                <tr style="border-bottom: 1px solid #444;">
+                    <td style="padding: 15px 0;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:40px; height:40px; background:#222; display:flex; justify-content:center; align-items:center; border:1px solid #555;">
+                                ${ item.image && (item.image.startsWith('http') || item.image.startsWith('data:')) ? '<img src="'+item.image+'" style="width:100%; height:100%; object-fit:cover;">' : '👾' }
+                            </div>
+                            <strong>${item.title}</strong>
+                        </div>
+                    </td>
+                    <td>${item.console}</td>
+                    <td>$${parseFloat(item.price).toFixed(2)}</td>
+                    <td>
+                        <button class="btn" style="background:transparent; color:red; border:1px solid red; padding:5px 10px;" 
+                                onclick="app.removeFromCart(${index})">X</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += '</table>';
+        container.html(html);
+        $('#cart-total').text(total.toFixed(2));
+    },
+
+    // Adds item to localStorage 'cart' array
+    addToCart: function(gameTitle) {
+        if (!this.currentUser) {
+            if(confirm("You must be logged in to shop. Go to login?")) {
+                window.location.href = 'login.html';
+            }
+            return;
+        }
+
+        // 1. Find the full game object from the main database
+        const games = JSON.parse(localStorage.getItem('games')) || [];
+        const gameToAdd = games.find(g => g.title === gameTitle);
+
+        if (gameToAdd) {
+            // 2. Get existing cart or empty array
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // 3. Add game to cart
+            cart.push(gameToAdd);
+            
+            // 4. Save back to storage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            alert(gameTitle + " added to cart!");
+        } else {
+            alert("Error: Game not found.");
+        }
+    },
+
+    removeFromCart: function(index) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.splice(index, 1); // Remove item at index
+        localStorage.setItem('cart', JSON.stringify(cart));
+        this.renderCart(); // Refresh the list
+    },
+
+    clearCart: function() {
+        if(confirm("Empty your cart?")) {
+            localStorage.removeItem('cart');
+            this.renderCart();
+        }
+    },
+
+    checkout: function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if(cart.length === 0) return;
+
+        // 1. Get the master list of games
+        let games = JSON.parse(localStorage.getItem('games')) || [];
+
+        // 2. Loop through every item in the cart
+        cart.forEach(cartItem => {
+            // CONDITION: If the seller is NOT 'RetroShop', remove it from the store
+            if (cartItem.seller !== 'RetroShop') {
+                // Filter the games list to keep everything EXCEPT the item with this ID
+                games = games.filter(g => g.id !== cartItem.id);
+            }
+        });
+
+        // 3. Save the updated games list back to storage
+        localStorage.setItem('games', JSON.stringify(games));
+
+        // 4. Payment Success Message
+        const total = $('#cart-total').text();
+        alert(`Payment of $${total} successful!`);
+        
+        // 5. Clear cart and redirect
+        localStorage.removeItem('cart');
+        window.location.href = 'index.html';
+    },
+
     // Sell page: ensure user is authenticated before allowing access to sell form
     checkSellAuth: function() {
         if (!this.currentUser) {
@@ -241,19 +373,8 @@ const app = {
         }
     },
 
-    addToCart: function(gameTitle) {
-        if (!this.currentUser) {
-            if(confirm("You must be logged in to shop. Go to login?")) {
-                window.location.href = 'login.html';
-            }
-        } else {
-            // In a real app, this would add to a database/array
-            alert(gameTitle + " added to your cart!");
-        }
-    },
-
     /* ------------------------------------------------------------
-       5) Admin / Debug helpers
+       6) Admin / Debug helpers
        - resetData: clears localStorage and sessionStorage after confirmation
        - WARNING: destructive operation used for debugging only
        ------------------------------------------------------------ */

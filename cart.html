@@ -1,33 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Basic setup -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroExchange | Dashboard</title>
-
-    <!-- Fonts + styles -->
+    <title>RetroExchange | Cart</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="main.js"></script>
 </head>
+<body id="page-cart">
 
-<body id="page-dashboard">
     <header>
         <div class="header-container">
             <div class="logo"><a href="index.html">RetroExchange</a></div>
-
-            <!-- Navigation -->
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="shop.html">Shop</a></li>
-                    <li><a href="sell.html">Sell/Trade</a></li>
-                    <li id="nav-cart" style="display:none;"><a href="cart.html">Cart</a></li>
+                    <li><a href="cart.html" class="active">Cart</a></li>
                     <li id="nav-login"><a href="login.html">Login</a></li>
                     <li id="nav-dashboard" style="display:none;"><a href="dashboard.html">Dashboard</a></li>
                 </ul>
@@ -36,30 +28,23 @@
     </header>
 
     <main>
-        <h2>User Dashboard</h2>
+        <h2>Your Loot Stash</h2>
 
-        <!-- Dashboard UI -->
-        <div style="background: #333333; padding: 20px; border: 2px solid var(--charcoal);">
-            <h3>Welcome, <span id="dash-username">User</span>!</h3>
-            <p>Member since: 2025</p>
+        <div class="form-container" style="max-width: 800px;">
+            <div id="cart-content">
+                </div>
 
-            <br>
-
-            <!-- Calls logout() in main.js -->
-            <button class="btn btn-primary" onclick="app.logout()">Logout</button>
-
-            <hr style="margin: 20px 0;">
-
-            <h3>My Listings</h3>
-
-            <!-- Filled in by JavaScript -->
-            <div id="user-listings" class="games-grid"></div>
+            <div id="cart-summary" style="margin-top: 30px; border-top: 2px solid #555; padding-top: 20px; text-align: right;">
+                <h3 style="color: var(--neon-pink);">Total: $<span id="cart-total">0.00</span></h3>
+                <br>
+                <button class="btn btn-primary" onclick="app.checkout()">Checkout</button>
+                <button class="btn" style="background: #444; color: white;" onclick="app.clearCart()">Clear Cart</button>
+            </div>
         </div>
     </main>
 
     <footer>
         <p>&copy; 2025 RetroExchange. All rights reserved.</p>
-        <p><a href="about.html">About</a> | <a href="config.html">Admin</a></p>
     </footer>
 </body>
 </html>
